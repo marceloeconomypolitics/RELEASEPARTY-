@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0060)file:///C:/Users/Marce/Downloads/cciano_release_party_3.html -->
+<!-- saved from url=(0060)file:///C:/Users/Marce/Downloads/cciano_release_party_4.html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -237,7 +237,7 @@
   </div>
 
   <!-- SCREEN 1: IG -->
-  <div class="screen" id="screen1">
+  <div class="screen active" id="screen1">
     <div class="card">
       <div class="card-head">
         <span class="card-num">01</span>
@@ -276,7 +276,7 @@
   </div>
 
   <!-- SCREEN 2: Formulario -->
-  <div class="screen active" id="screen2">
+  <div class="screen" id="screen2">
 
     <div class="card">
       <div class="card-head">
@@ -389,10 +389,20 @@
     const params = new URLSearchParams(window.location.search);
     if (params.get('reset') === '1') {
       localStorage.removeItem('cciano_registered');
+      showScreen(1);
       return;
     }
-    if (localStorage.getItem('cciano_registered')) { showScreen(3); drawQR(); }
+    if (localStorage.getItem('cciano_registered')) {
+      showScreen(3);
+      drawQR();
+    } else {
+      showScreen(1);
+    }
   }
+  window.addEventListener('pageshow', function(event) {
+    // Fixes iOS Safari bfcache showing a stale screen when reopening the page
+    initForm();
+  });
   function goToScreen(n) { showScreen(n); }
   function showScreen(n) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
